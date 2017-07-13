@@ -1,0 +1,45 @@
+{{outlet}}
+
+<div class="row text-center">
+    <div class="col-md-12"><h2>Progress Bars Demo</h2></div>
+</div>
+
+<div class="row">
+    {{#each bars as |bar index|}}
+        <div class="row">
+            <div class="col-md-1 col-md-offset-2 text-center">
+            <label>
+                {{add index 1}}
+            </label>
+         </div>
+        <div class="col-md-6">
+            {{#bs-progress as |p|}}
+                {{p.bar value=bar.value minValue=bar.minValue maxValue=bar.limit showLabel=true roundDigits=0  striped=true animate=true}}
+            {{/bs-progress}}
+        </div>
+        </div>
+         
+    {{/each}}
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+            <div class="col-md-6">
+                {{#bs-button-group
+                    value=selectedBarId
+                    type="radio"
+                    onChange=(action (mut selectedBarId)) as |bg|}}
+                    {{#each bars as |bar index|}}
+                        {{#bg.button value=bar.id}}{{concat "bar-" (add index 1)}}{{/bg.button}}
+                    {{/each}}
+                {{/bs-button-group}}
+            </div>
+            <div class="col-md-6">
+                 {{#each model.buttons as |button|}}
+                    {{#bs-button onClick=(action "updateBar" button)}}{{button}}{{/bs-button}}
+                 {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
